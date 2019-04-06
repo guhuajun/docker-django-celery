@@ -44,6 +44,5 @@ services:
       - redis
       - worker
 
-
 networks:
   djcelery:

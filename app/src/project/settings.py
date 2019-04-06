@@ -128,3 +128,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # celry
 CELERY_BROKER_URL = os.getenv('DJANGO_CELERY_BROKER', 'redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_ROUTES = {
+#     'backend.tasks.add': {'queue': 'add'},
+#     'backend.tasks.mul': {'queue': 'mul'},
+# }
