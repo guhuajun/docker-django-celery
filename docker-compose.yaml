@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      djcelery:
+  app:
+    image: greggu/djcelery-demo:0.1
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      djcelery:
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_CELERY_BROKER: "redis://redis:6379/0"
+  worker:
+    image: greggu/djcelery-demo:0.1
+    command:
+      ["celery", "worker", "-A", "project", "-l", "info"]
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_CELERY_BROKER: "redis://redis:6379/0"
+    networks:
+      djcelery:
+    depends_on: 
+      - redis
+  flower:
+    image: greggu/djcelery-demo:0.1
+    command:
+      ["celery", "flower", "-A", "project", "-l", "info"]
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_CELERY_BROKER: "redis://redis:6379/0"
+    ports:
+      - "5555:5555"
+    networks:
+      djcelery:
+    depends_on: 
+      - redis
+      - worker
+
+
+networks:
+  djcelery:

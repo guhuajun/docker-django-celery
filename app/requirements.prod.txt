@@ -1,5 +1,0 @@
-django
-django-extensions
-
-celery
-flower

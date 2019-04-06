@@ -1,0 +1,9 @@
+django
+django-extensions
+
+celery[redis]
+flower
+django-celery-results
+
+whitenoise
+gunicorn
