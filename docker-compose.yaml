@@ -12,7 +12,7 @@ services:
       context: ./app
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - 8000:8000
     networks:
       djcelery:
     environment:
@@ -21,7 +21,7 @@ services:
   worker:
     image: greggu/djcelery-demo:0.1
     command:
-      ["celery", "worker", "-A", "project", "-l", "info"]
+      ["celery", "-A", "project", "worker", "-l", "info"]
     environment:
       DJANGO_DEBUG: "False"
       DJANGO_CELERY_BROKER: "redis://redis:6379/0"
@@ -32,12 +32,12 @@ services:
   flower:
     image: greggu/djcelery-demo:0.1
     command:
-      ["celery", "flower", "-A", "project", "-l", "info"]
+      ["celery", "-A", "project", "flower", "-l", "info"]
     environment:
       DJANGO_DEBUG: "False"
       DJANGO_CELERY_BROKER: "redis://redis:6379/0"
     ports:
-      - "5555:5555"
+      - 5555:5555
     networks:
       djcelery:
     depends_on: 

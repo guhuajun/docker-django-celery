@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3-slim
 
 ADD src/requirements.prod.txt /app/
 RUN pip install -r /app/requirements.prod.txt \
